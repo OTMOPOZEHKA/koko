@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="RU">
+<head>
+  <title>Yandex panoramas v27.1</title>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="http://api-maps.yandex.ru/2.1/?apikey=4c447df8-2105-4390-81f1-740562d9cc5d&lang=ru-RU"></script>
+  <style>
+    html, body {
+      width:100%;
+      height:100%;
+      margin:0;
+      padding:0;
+    }
+
+    div.player1 {
+      padding:0;
+      margin:0;
+      height:75%;
+      width:100%;
+      border: solid 2px red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Yandex Panorama v.21.1</h1>
+  <div id="player" class="player1"></div>
+  <button onclick="onClickNext()">Next</button>
+
+  <script>
+    console.log("Test Yandex panorama v21.1");
+    var x0 = 55.790927;
+    var y0 = 49.114453;
+    var x1 = 55.797391;
+    var y1 = 49.105993;
+    var player1;
+
+    ymaps.ready(init);
+
+    function init() {
+      console.log("init:called");
+      ymaps.panorama.locate([x0,y0]).done(
+        function(panoramas) {
+          console.log("panoramas:"+panoramas);
+          console.log("panoramas[0]"+panoramas[0]);
+          var player = new ymaps.panorama.Player("player",panoramas[0],{direction:[180,15]});
+          player1 = player;
+        },
+        function() {}
+      );
+    }
+
+    function onClickNext() {
+      console.log("Clicked:Next");
+      player1.moveTo([x1,y1]);
+      document.body.style.backgroundColor = getRandomColor();
+    }
+
+    function getRandomColor() {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+  </script>
+</body>
+</html>
